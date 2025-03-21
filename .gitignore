@@ -47,3 +47,7 @@ logs/
 # Database
 *.h2.db
 *.mv.db
+
+# SQLite
+*.db
+db/
