@@ -11,7 +11,7 @@ public interface MenuRepository extends JpaRepository<MenuEntity, Long> {
     List<MenuEntity> findAllByIsDeletedFalseOrderByOrderNoAsc();
 
     // 게스트용
-    List<MenuEntity> findAllByIsDeletedFalseAndIsActiveTrueOrderByOrderNoAsc();
+    List<MenuEntity> findAllByIsDeletedFalseAndIsActiveTrueAndIsAdminOrderByOrderNoAsc(char isAdmin);
 
     /* @Query 로 써도 되는데 네이밍 규칙만 맞으면 조건을 메소드명으로 작성해서 사용가능 대박!!
     @Query("SELECT m FROM MenuEntity m WHERE m.isDeleted = false ORDER BY m.sortOrder ASC")

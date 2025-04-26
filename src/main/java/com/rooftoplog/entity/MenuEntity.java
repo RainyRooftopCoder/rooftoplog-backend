@@ -25,6 +25,9 @@ public class MenuEntity {
     @Column(name="NAME", nullable = false)
     private String name;
 
+    @Column(name = "IS_ADMIN", columnDefinition = "CHAR(1) DEFAULT 'N'")
+    private char isAdmin;
+
     @Column(name="ORDER_NO", columnDefinition = "INTEGER DEFAULT 0")
     private Integer orderNo;
 
