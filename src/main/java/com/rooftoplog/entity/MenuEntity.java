@@ -25,6 +25,9 @@ public class MenuEntity {
     @Column(name="NAME", nullable = false)
     private String name;
 
+    @Column(name="URL")
+    private String url;
+
     @Column(name = "IS_ADMIN", columnDefinition = "CHAR(1) DEFAULT 'N'")
     private char isAdmin;
 

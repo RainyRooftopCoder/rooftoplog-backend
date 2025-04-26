@@ -18,11 +18,17 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @GetMapping
-    public List<MenuEntity> getMenus() {
-        // 나중에 관리자 여부 확인해서 분기 처리
+    @GetMapping("/guest")
+    public List<MenuEntity> getGuestMenus() {
         List<MenuEntity> menus = menuService.getGuestMenus();
-        log.debug("MENU IN");
+        log.debug("GET GUEST MENU!!");
+        return menus;
+    }
+
+    @GetMapping("/admin")
+    public List<MenuEntity> getAdminMenus() {
+        List<MenuEntity> menus = menuService.getAdminMenus();
+        log.debug("GET ADMIN MENU!!");
         return menus;
     }
 }
