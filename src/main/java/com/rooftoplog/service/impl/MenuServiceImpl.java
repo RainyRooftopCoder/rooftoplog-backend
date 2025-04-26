@@ -16,7 +16,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuEntity> getGuestMenus() {
-        return menuRepository.findAllByIsDeletedFalseAndIsActiveTrueOrderByOrderNoAsc();
+        return menuRepository.findAllByIsDeletedFalseAndIsActiveTrueAndIsAdminOrderByOrderNoAsc('N');
     }
 
     @Override

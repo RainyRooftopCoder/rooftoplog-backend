@@ -23,7 +23,6 @@ public class MenuController {
         // 나중에 관리자 여부 확인해서 분기 처리
         List<MenuEntity> menus = menuService.getGuestMenus();
         log.debug("MENU IN");
-        log.debug("MENUS ::: {}", menus);
         return menus;
     }
 }
