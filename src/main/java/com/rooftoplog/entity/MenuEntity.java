@@ -22,7 +22,7 @@ public class MenuEntity {
     @Column(name="PARENT_ID")
     private Integer parentId;
 
-    @Column(name="NAME", nullable = false)
+    @Column(name="NAME")
     private String name;
 
     @Column(name="URL")
@@ -40,10 +40,10 @@ public class MenuEntity {
     @Column(name="IS_DELETED", columnDefinition = "BOOLEAN DEFAULT 0")
     private Boolean isDeleted;
 
-    @Column(name="CREATED_AT", updatable = false)
+    @Column(name = "CREATED_AT", columnDefinition = "TEXT", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name="UPDATED_AT", updatable = false)
+    @Column(name = "UPDATED_AT", columnDefinition = "TEXT")
     private LocalDateTime updatedAt;
 
     @PrePersist

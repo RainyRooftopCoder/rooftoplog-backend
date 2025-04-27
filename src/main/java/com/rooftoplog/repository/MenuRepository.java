@@ -20,4 +20,8 @@ public interface MenuRepository extends JpaRepository<MenuEntity, Long> {
     @Query("SELECT m FROM MenuEntity m WHERE m.isDeleted = false AND m.isVisible = true ORDER BY m.sortOrder ASC")
     List<MenuEntity> findGuestMenus();
     */
+
+    int countByParentIdNull();
+
+    int countByParentId(long parentId);
 }
