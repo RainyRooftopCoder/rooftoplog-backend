@@ -12,5 +12,7 @@ public interface MenuService {
 
     MenuEntity createMenu(MenuDto menuDto);
 
+    MenuEntity updateMenu(MenuDto menuDto);
+
     void deleteMenu(MenuDto menuDto);
 }

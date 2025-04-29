@@ -36,6 +36,11 @@ public class MenuController {
         return menuService.createMenu(menuDto);
     }
 
+    @PutMapping
+    public MenuEntity updateMenu(@RequestBody MenuDto menuDto) {
+        return menuService.updateMenu(menuDto);
+    }
+
     @DeleteMapping()
     public void deleteMenu(@RequestBody MenuDto menuDto) {
         menuService.deleteMenu(menuDto);

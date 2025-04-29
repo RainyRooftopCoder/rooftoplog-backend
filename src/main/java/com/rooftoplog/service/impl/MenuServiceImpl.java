@@ -31,7 +31,14 @@ public class MenuServiceImpl implements MenuService {
     public MenuEntity createMenu(MenuDto menuDto) {
         MenuEntity menuEntity = commonMenuSet(menuDto);
 
-        return menuRepository.save(menuEntity);
+        return saveMenu(menuEntity);
+    }
+
+    @Override
+    public MenuEntity updateMenu(MenuDto menuDto) {
+        MenuEntity menuEntity = commonMenuSet(menuDto);
+
+        return saveMenu(menuEntity);
     }
 
     @Override
@@ -42,14 +49,18 @@ public class MenuServiceImpl implements MenuService {
         menuRepository.delete(menuEntity);
     }
 
+    private MenuEntity saveMenu(MenuEntity menuEntity) {
+        return menuRepository.save(menuEntity);
+    }
+
     private MenuEntity commonMenuSet(MenuDto menuDto) {
         MenuEntity menuEntity = new MenuEntity();
 
         int sortNo = 0;
         if(menuDto.getParentId() == null) {
-            sortNo = menuRepository.countByParentIdNull();
+            sortNo = menuRepository.countByParentIdNull(); // 부모(카테고리)메뉴 카운트
         } else {
-            sortNo = menuRepository.countByParentId(menuDto.getParentId());
+            sortNo = menuRepository.countByParentId(menuDto.getParentId()); // 자식메뉴 카운트
         }
 
         if(menuDto.getMenuId() != null) {
