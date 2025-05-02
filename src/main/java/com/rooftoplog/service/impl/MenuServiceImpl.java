@@ -60,14 +60,20 @@ public class MenuServiceImpl implements MenuService {
         if(menuDto.getParentId() == null) {
             sortNo = menuRepository.countByParentIdNull(); // 부모(카테고리)메뉴 카운트
         } else {
-            sortNo = menuRepository.countByParentId(menuDto.getParentId()); // 자식메뉴 카운트
+            long parentId = menuDto.getParentId();
+
+            menuEntity.setParentId(parentId);
+            sortNo = menuRepository.countByParentId(parentId); // 자식메뉴 카운트
         }
 
         if(menuDto.getMenuId() != null) {
             menuEntity.setMenuId(menuDto.getMenuId());
+        } else {
+            sortNo++;
         }
 
         menuEntity.setName(menuDto.getName());
+        menuEntity.setUrl(menuDto.getUrl());
         menuEntity.setIsAdmin(menuDto.getIsAdmin());
         menuEntity.setOrderNo(sortNo);
 

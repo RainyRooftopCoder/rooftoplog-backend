@@ -20,7 +20,7 @@ public class MenuEntity {
     private Long menuId;
 
     @Column(name="PARENT_ID")
-    private Integer parentId;
+    private Long parentId;
 
     @Column(name="NAME")
     private String name;
