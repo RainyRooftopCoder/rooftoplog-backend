@@ -3,6 +3,7 @@ package com.rooftoplog.service.impl;
 import com.rooftoplog.entity.UserEntity;
 import com.rooftoplog.repository.UserRepository;
 import com.rooftoplog.service.UserService;
+import com.rooftoplog.util.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final EncryptUtil encryptUtil;
+
     @Override
     public Boolean adminLogin(String username, String password) {
         Boolean isLogin = false;
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
         log.info("userPswd :: {}", password);
         log.info("getPassword :: {}", user.getPassword());
 
-        if(user.getPassword().equals(password)) {
+        if(encryptUtil.decryptPassword(password, user.getPassword())) {
             isLogin = true;
         }
 
