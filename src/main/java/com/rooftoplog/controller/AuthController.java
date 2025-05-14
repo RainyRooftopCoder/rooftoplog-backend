@@ -26,11 +26,11 @@ public class AuthController {
             Boolean isLogin = false;
             isLogin = userService.adminLogin(userNm, passWd);
 
-        if(isLogin) {
-            return ResponseEntity.ok("Login Success");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
-        }
+            if(isLogin) {
+                return ResponseEntity.ok("Login Success");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
+            }
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }

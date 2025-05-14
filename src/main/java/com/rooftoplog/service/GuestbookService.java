@@ -10,4 +10,9 @@ public interface GuestbookService {
     List<GuestbookEntity> findAllGuestbooks();
 
     GuestbookEntity addGuestbook(GuestbookDto guestbookDto);
+
+    GuestbookEntity checkPswd(GuestbookDto guestbookDto);
+
+    GuestbookEntity updateGuestbook(GuestbookDto guestbookDto);
+
 }

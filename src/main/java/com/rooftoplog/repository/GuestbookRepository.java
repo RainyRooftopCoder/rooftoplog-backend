@@ -11,7 +11,7 @@ public interface GuestbookRepository extends JpaRepository<GuestbookEntity, Long
 
     List<GuestbookEntity> findAllByIsDeletedFalse();
 
-    List<GuestbookEntity> findAllByIsDeletedFalseAndGuestbookId(Long guestbookId);
+    GuestbookEntity findByIsDeletedFalseAndGuestbookId(Long guestbookId);
 
     Integer countAllByIsDeletedFalse();
 

@@ -16,4 +16,5 @@ public class GuestbookDto {
     private String password; // insert/update 시에만 사용
     private String content;
     private Boolean isDeleted;
+    private String executionDivision;
 }

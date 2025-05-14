@@ -8,6 +8,7 @@ import com.rooftoplog.util.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,25 +31,58 @@ public class GuestbookServiceImpl implements GuestbookService {
     public GuestbookEntity addGuestbook(GuestbookDto guestbookDto) {
         GuestbookEntity guestbook = new GuestbookEntity();
 
+        String executionDivision = guestbookDto.getExecutionDivision();
+
+        if(!StringUtils.hasText(executionDivision)) {
+            throw new RuntimeException("실행 구분이 부정확합니다.");
+        }
+
+        String encryptPw = encryptUtil.encryptPassword(guestbook.getPassword());
+
         guestbook.setContent(guestbookDto.getContent());
         guestbook.setAuthor(guestbookDto.getAuthor());
-        guestbook.setPassword(guestbookDto.getPassword());
-        guestbook.setIsDeleted(guestbookDto.getIsDeleted());
+        guestbook.setPassword(encryptPw);
+        guestbook.setIsDeleted(false);
         guestbook.setCreatedAt(LocalDateTime.now());
         guestbook.setUpdatedAt(LocalDateTime.now());
 
         return saveGuestbook(guestbook);
     }
 
-    private GuestbookEntity saveGuestbook(GuestbookEntity guestbook) {
+    @Override
+    public GuestbookEntity checkPswd(GuestbookDto guestbookDto) {
+        log.debug("guestbookDto.getGuestbookId() :: {}", guestbookDto.getGuestbookId());
+        log.debug("guestbookDto.getPassword() :: {}", guestbookDto.getPassword());
+        GuestbookEntity guestbook = guestbookRepository.findByIsDeletedFalseAndGuestbookId(guestbookDto.getGuestbookId());
+        log.debug("guestbook :: {}", guestbook);
 
-        String encryptPw = encryptUtil.encryptPassword(guestbook.getPassword());
-        guestbook.setPassword(encryptPw);
+        if(encryptUtil.decryptPassword(guestbookDto.getPassword(), guestbook.getPassword())) {
+            return guestbook;
+        }else {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+    }
 
-        if(guestbook.getIsDeleted() == null) {
+    @Override
+    public GuestbookEntity updateGuestbook(GuestbookDto guestbookDto) {
+        GuestbookEntity guestbook = new GuestbookEntity();
+
+        if("delete".equals(guestbookDto.getExecutionDivision())) {
+            guestbook = guestbookRepository.findByIsDeletedFalseAndGuestbookId(guestbookDto.getGuestbookId());
+            guestbook.setIsDeleted(true);
+            guestbook.setUpdatedAt(LocalDateTime.now());
+        } else {
+            guestbook.setContent(guestbookDto.getContent());
+            guestbook.setAuthor(guestbookDto.getAuthor());
+            guestbook.setPassword(guestbookDto.getPassword());
             guestbook.setIsDeleted(false);
+            guestbook.setUpdatedAt(LocalDateTime.now());
         }
 
+        return saveGuestbook(guestbook);
+    }
+
+    private GuestbookEntity saveGuestbook(GuestbookEntity guestbook) {
         return guestbookRepository.save(guestbook);
     }
 }
