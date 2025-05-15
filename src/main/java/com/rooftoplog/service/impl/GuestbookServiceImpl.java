@@ -51,10 +51,7 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     @Override
     public GuestbookEntity checkPswd(GuestbookDto guestbookDto) {
-        log.debug("guestbookDto.getGuestbookId() :: {}", guestbookDto.getGuestbookId());
-        log.debug("guestbookDto.getPassword() :: {}", guestbookDto.getPassword());
         GuestbookEntity guestbook = guestbookRepository.findByIsDeletedFalseAndGuestbookId(guestbookDto.getGuestbookId());
-        log.debug("guestbook :: {}", guestbook);
 
         if(encryptUtil.decryptPassword(guestbookDto.getPassword(), guestbook.getPassword())) {
             return guestbook;
